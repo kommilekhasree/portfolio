@@ -1,1 +1,1093 @@
-hi
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kommi Lekha Sree — Data Analyst & Web Developer</title>
+  <meta name="description" content="Portfolio of Kommi Lekha Sree — passionate Data Analyst & Web Developer turning data into decisions and ideas into impactful digital experiences." />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          colors: {
+            brand: { orange: '#FF5C00', rose: '#FF2D55', indigo: '#5B5FED', bg: '#F7F8FA' }
+          },
+          animation: {
+            blob:    'blob 12s infinite ease-in-out',
+            marquee: 'marquee 28s linear infinite',
+            float:   'float 5s ease-in-out infinite',
+            'fade-up': 'fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) forwards',
+            'spin-slow': 'spin 20s linear infinite',
+            'ping-slow': 'ping 3s cubic-bezier(0,0,0.2,1) infinite',
+            typing:  'typing 3.5s steps(30,end) forwards',
+          },
+          keyframes: {
+            blob: {
+              '0%,100%': { transform: 'translate(0,0) scale(1)' },
+              '33%': { transform: 'translate(50px,-70px) scale(1.1)' },
+              '66%': { transform: 'translate(-30px,40px) scale(0.92)' },
+            },
+            marquee: { '0%': { transform: 'translateX(0%)' }, '100%': { transform: 'translateX(-50%)' } },
+            float: { '0%,100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-12px)' } },
+            fadeUp: { '0%': { opacity: 0, transform: 'translateY(28px)' }, '100%': { opacity: 1, transform: 'translateY(0)' } },
+            typing: { from: { width: '0' }, to: { width: '100%' } },
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    :root { --orange: #FF5C00; --rose: #FF2D55; --indigo: #5B5FED; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: #F7F8FA;
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* ── Custom cursor ── */
+    #cursor {
+      width: 12px; height: 12px;
+      background: #111;
+      border-radius: 50%;
+      position: fixed; top: 0; left: 0;
+      pointer-events: none; z-index: 9999;
+      transition: transform 0.15s ease, background 0.2s ease, width 0.25s ease, height 0.25s ease;
+      mix-blend-mode: multiply;
+    }
+    #cursor-ring {
+      width: 40px; height: 40px;
+      border: 1.5px solid rgba(0,0,0,0.25);
+      border-radius: 50%;
+      position: fixed; top: 0; left: 0;
+      pointer-events: none; z-index: 9998;
+      transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), opacity 0.3s;
+    }
+    body:hover #cursor { opacity: 1; }
+    a:hover ~ #cursor, button:hover ~ #cursor { transform: scale(2.5); background: var(--orange); }
+
+    /* ── Ambient BG ── */
+    .ambient { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
+
+    /* ── Glassmorphism card ── */
+    .glass {
+      background: rgba(255,255,255,0.72);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      border: 1px solid rgba(255,255,255,0.85);
+      border-radius: 28px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.04), 0 1px 0 rgba(255,255,255,0.8) inset;
+      transition: all 0.45s cubic-bezier(0.16,1,0.3,1);
+    }
+    .glass:hover {
+      transform: translateY(-5px) scale(1.01);
+      box-shadow: 0 20px 48px rgba(0,0,0,0.09);
+      background: rgba(255,255,255,0.9);
+    }
+    .glass-dark {
+      background: rgba(15,15,20,0.88);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 28px;
+    }
+
+    /* ── Gradient text ── */
+    .text-grad {
+      background: linear-gradient(125deg, var(--orange) 0%, var(--rose) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .text-grad-cool {
+      background: linear-gradient(125deg, var(--indigo) 0%, #9B5DE5 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ── Nav ── */
+    #navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+    }
+    #navbar.scrolled {
+      background: rgba(247,248,250,0.85);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      box-shadow: 0 1px 0 rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.04);
+    }
+
+    /* ── Section reveal animation ── */
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── Timeline ── */
+    .tl-line { position: absolute; left: 9px; top: 8px; bottom: 0; width: 1px; background: linear-gradient(to bottom, #e5e7eb, transparent); }
+    .tl-dot { width: 18px; height: 18px; border-radius: 50%; border: 3px solid white; box-shadow: 0 0 0 3px #e5e7eb; flex-shrink: 0; transition: all 0.3s; }
+    .tl-item:hover .tl-dot { box-shadow: 0 0 0 3px var(--orange); transform: scale(1.2); }
+
+    /* ── Skill bar animation ── */
+    .skill-bar { transition: width 1.2s cubic-bezier(0.16,1,0.3,1); }
+
+    /* ── Marquee ── */
+    .marquee-wrap { overflow: hidden; mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent); }
+
+    /* ── Project card ── */
+    .proj-card { transition: all 0.5s cubic-bezier(0.16,1,0.3,1); }
+    .proj-card:hover { transform: translateY(-8px) rotate(-0.5deg); }
+    .proj-card:hover .proj-overlay { opacity: 1; }
+    .proj-overlay { opacity: 0; transition: opacity 0.3s; }
+
+    /* ── Pill tag ── */
+    .tag {
+      display: inline-flex; align-items: center;
+      padding: 4px 12px; border-radius: 100px;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+    }
+
+    /* ── CTA Button ── */
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: #111; color: #fff;
+      padding: 14px 28px; border-radius: 100px;
+      font-size: 14px; font-weight: 700; letter-spacing: 0.04em;
+      transition: all 0.35s cubic-bezier(0.16,1,0.3,1);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+      position: relative; overflow: hidden;
+    }
+    .btn-primary::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(125deg, var(--orange), var(--rose));
+      opacity: 0; transition: opacity 0.35s;
+    }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,0.22); }
+    .btn-primary:hover::after { opacity: 1; }
+    .btn-primary span { position: relative; z-index: 1; }
+    .btn-primary svg { position: relative; z-index: 1; }
+
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: transparent; color: #111;
+      padding: 13px 27px; border-radius: 100px;
+      font-size: 14px; font-weight: 700; letter-spacing: 0.04em;
+      border: 1.5px solid rgba(0,0,0,0.15);
+      transition: all 0.35s cubic-bezier(0.16,1,0.3,1);
+    }
+    .btn-outline:hover { background: #111; color: #fff; border-color: #111; transform: translateY(-3px); }
+
+    /* ── Mobile menu ── */
+    #mobile-menu {
+      position: fixed; inset: 0; z-index: 90;
+      background: rgba(247,248,250,0.96);
+      backdrop-filter: blur(28px);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 40px;
+      opacity: 0; visibility: hidden;
+      transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+    }
+    #mobile-menu.open { opacity: 1; visibility: visible; }
+
+    /* ── Stats counter bg ── */
+    .stat-card {
+      background: linear-gradient(135deg, #fff 0%, #fafafa 100%);
+      border: 1px solid rgba(0,0,0,0.06);
+      border-radius: 20px;
+      padding: 24px;
+      text-align: center;
+    }
+
+    /* ── Contact form ── */
+    .form-input {
+      width: 100%;
+      padding: 14px 18px;
+      background: rgba(255,255,255,0.9);
+      border: 1.5px solid rgba(0,0,0,0.1);
+      border-radius: 14px;
+      font-size: 14px; font-weight: 500;
+      outline: none;
+      transition: all 0.3s;
+      color: #111;
+    }
+    .form-input:focus { border-color: var(--orange); box-shadow: 0 0 0 4px rgba(255,92,0,0.08); }
+    .form-input::placeholder { color: #aaa; }
+
+    /* ── Scrollbar ── */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.12); border-radius: 10px; }
+
+    /* ── Toast notification ── */
+    #toast {
+      position: fixed; bottom: 32px; right: 32px; z-index: 999;
+      background: #111; color: #fff;
+      padding: 14px 22px; border-radius: 14px;
+      font-size: 14px; font-weight: 600;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+      transform: translateY(20px); opacity: 0;
+      transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+      pointer-events: none;
+    }
+    #toast.show { transform: translateY(0); opacity: 1; }
+  </style>
+</head>
+
+<body>
+<!-- ════════════════════════════════════════════
+     Custom Cursor
+════════════════════════════════════════════ -->
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- ════════════════════════════════════════════
+     Ambient BG Blobs
+════════════════════════════════════════════ -->
+<div class="ambient">
+  <div class="absolute -top-40 -left-40 w-[600px] h-[600px] bg-orange-200 rounded-full mix-blend-multiply filter blur-[120px] opacity-25 animate-blob"></div>
+  <div class="absolute top-1/3 -right-48 w-[500px] h-[500px] bg-rose-200 rounded-full mix-blend-multiply filter blur-[120px] opacity-20 animate-blob" style="animation-delay:3s"></div>
+  <div class="absolute bottom-0 left-1/3 w-[700px] h-[700px] bg-indigo-200 rounded-full mix-blend-multiply filter blur-[140px] opacity-15 animate-blob" style="animation-delay:6s"></div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     NAVBAR — full width, sticky, scrolled glassy
+════════════════════════════════════════════ -->
+<nav id="navbar" class="py-4 px-6 md:px-12 lg:px-20">
+  <div class="max-w-7xl mx-auto flex items-center justify-between">
+    <!-- Logo -->
+    <a href="#home" class="flex items-center gap-3 group" id="logo-link">
+      <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-[#FF5C00] to-[#FF2D55] flex items-center justify-center text-white font-black text-sm shadow-[0_4px_12px_rgba(255,92,0,0.4)] group-hover:scale-110 transition-transform">KS</div>
+      <span class="font-bold text-[15px] text-gray-900 hidden sm:block tracking-tight">Kommi<span class="text-[#FF5C00]">.</span></span>
+    </a>
+
+    <!-- Desktop Links -->
+    <ul class="hidden md:flex items-center gap-1">
+      <li><a href="#home"     class="nav-link px-4 py-2 rounded-full text-[13px] font-600 text-gray-600 hover:text-gray-900 hover:bg-white/80 transition-all">Home</a></li>
+      <li><a href="#about"    class="nav-link px-4 py-2 rounded-full text-[13px] font-600 text-gray-600 hover:text-gray-900 hover:bg-white/80 transition-all">About</a></li>
+      <li><a href="#projects" class="nav-link px-4 py-2 rounded-full text-[13px] font-600 text-gray-600 hover:text-gray-900 hover:bg-white/80 transition-all">Projects</a></li>
+      <li><a href="#skills"   class="nav-link px-4 py-2 rounded-full text-[13px] font-600 text-gray-600 hover:text-gray-900 hover:bg-white/80 transition-all">Skills</a></li>
+      <li><a href="#contact"  class="nav-link px-4 py-2 rounded-full text-[13px] font-600 text-gray-600 hover:text-gray-900 hover:bg-white/80 transition-all">Contact</a></li>
+    </ul>
+
+    <!-- CTA + Hamburger -->
+    <div class="flex items-center gap-3">
+      <a href="mailto:kommilekhasreetpt@gmail.com?subject=Let's work together!" class="hidden sm:inline-flex btn-primary text-sm py-2.5 px-5">
+        <span>Hire Me</span>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 -mr-1"><path d="M5 12h14m-7-7l7 7-7 7"/></svg>
+      </a>
+      <button id="hamburger" onclick="toggleMenu()" class="md:hidden w-10 h-10 flex flex-col items-center justify-center gap-[5px] rounded-xl border border-gray-200 bg-white/80 hover:bg-white transition-all">
+        <span class="hamburger-line block w-5 h-[1.5px] bg-gray-800 transition-all"></span>
+        <span class="hamburger-line block w-5 h-[1.5px] bg-gray-800 transition-all"></span>
+        <span class="hamburger-line block w-3 h-[1.5px] bg-gray-800 transition-all self-start ml-1"></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Menu Overlay -->
+<div id="mobile-menu">
+  <button onclick="toggleMenu()" class="absolute top-6 right-6 w-10 h-10 rounded-xl border border-gray-200 flex items-center justify-center text-gray-700 hover:bg-gray-100 transition">✕</button>
+  <a href="#home"     onclick="toggleMenu()" class="text-4xl font-black text-gray-900 hover:text-[#FF5C00] transition">Home</a>
+  <a href="#about"    onclick="toggleMenu()" class="text-4xl font-black text-gray-900 hover:text-[#FF5C00] transition">About</a>
+  <a href="#projects" onclick="toggleMenu()" class="text-4xl font-black text-gray-900 hover:text-[#FF5C00] transition">Projects</a>
+  <a href="#skills"   onclick="toggleMenu()" class="text-4xl font-black text-gray-900 hover:text-[#FF5C00] transition">Skills</a>
+  <a href="#contact"  onclick="toggleMenu()" class="text-4xl font-black text-gray-900 hover:text-[#FF5C00] transition">Contact</a>
+  <a href="mailto:kommilekhasreetpt@gmail.com" class="btn-primary group">
+    <span>Email Me</span>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 group-hover:translate-x-1 transition-transform"><path d="M5 12h14m-7-7l7 7-7 7"/></svg>
+  </a>
+</div>
+
+<!-- ════════════════════════════════════════════
+     HERO
+════════════════════════════════════════════ -->
+<section id="home" class="min-h-screen flex items-center pt-28 pb-20 px-6 md:px-12 lg:px-20 max-w-7xl mx-auto">
+  <div class="w-full">
+    <!-- Available badge -->
+    <div class="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/80 backdrop-blur border border-gray-200/80 shadow-sm text-[13px] font-semibold text-gray-700 mb-10 animate-float">
+      <span class="relative flex h-2.5 w-2.5">
+        <span class="animate-ping-slow absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+        <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
+      </span>
+      Open to New Opportunities — 2026
+    </div>
+
+    <!-- Main heading -->
+    <div class="reveal">
+      <h1 class="text-[clamp(48px,8vw,100px)] font-black leading-[1.02] tracking-[-0.03em] text-gray-900 mb-6">
+        Hi, I'm
+        <span class="inline-block align-middle mx-2 -translate-y-1 relative group">
+          <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=400"
+               alt="Kommi Lekha Sree"
+               class="w-[80px] h-[80px] md:w-[110px] md:h-[110px] rounded-[28px] object-cover shadow-[0_20px_48px_rgba(0,0,0,0.18)] border-4 border-white group-hover:scale-105 transition-transform duration-500">
+          <div class="absolute -inset-1 bg-gradient-to-tr from-[#FF5C00] to-[#FF2D55] rounded-[32px] blur-xl opacity-0 group-hover:opacity-30 transition-opacity duration-500 -z-10"></div>
+        </span>
+        <span class="text-grad">Kommi.</span>
+      </h1>
+
+      <h2 class="text-[clamp(28px,5vw,64px)] font-bold leading-[1.1] text-gray-300 tracking-tight mb-10 max-w-4xl">
+        Data Analyst &amp;
+        <span class="text-gray-500">Web Developer</span>
+        turning data into&nbsp;<span class="text-gray-900 relative">decisions<svg class="absolute -bottom-1 left-0 w-full" viewBox="0 0 200 8" fill="none"><path d="M2 6C40 2 80 7 120 4C150 2 180 5 198 3" stroke="#FF5C00" stroke-width="2.5" stroke-linecap="round"/></svg></span>.
+      </h2>
+
+      <p class="text-[16px] text-gray-500 font-medium max-w-lg leading-relaxed mb-12">
+        Motivated CS (Data Science) student at Sathyabama University — building scalable web apps and beautiful data visualisations that actually make a difference.
+      </p>
+
+      <div class="flex flex-wrap gap-4 items-center">
+        <a href="#projects" class="btn-primary group">
+          <span>View My Work</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 group-hover:translate-x-1 transition-transform"><path d="M5 12h14m-7-7l7 7-7 7"/></svg>
+        </a>
+        <a href="Kommi_Lekha_Sree_Resume.pdf" download class="btn-outline group">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" class="group-hover:animate-bounce shrink-0"><path d="M12 15V17H4V15M8 3V13M8 13L11 10M8 13L5 10" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Download CV</span>
+        </a>
+        <a href="#contact" class="btn-outline">Let's Talk</a>
+        <a href="https://github.com/Lekha0403" target="_blank" rel="noopener" class="w-11 h-11 rounded-full bg-white border border-gray-200 shadow-sm flex items-center justify-center hover:scale-110 hover:shadow-md transition-all shrink-0" title="GitHub">
+          <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24" class="shrink-0"><path d="M12 2C6.475 2 2 6.475 2 12c0 4.42 2.865 8.165 6.84 9.49.5.09.68-.215.68-.48 0-.235-.01-1.02-.015-1.855C6.835 19.945 6.275 18.01 6.275 18.01c-.455-1.155-1.11-1.465-1.11-1.465-.91-.62.07-.605.07-.605 1 .07 1.53 1.03 1.53 1.03.89 1.525 2.34 1.085 2.91.83.09-.645.35-1.085.635-1.335-2.225-.25-4.555-1.115-4.555-4.93 0-1.09.39-1.98 1.03-2.68-.105-.255-.445-1.27.095-2.645 0 0 .84-.27 2.75 1.025A9.57 9.57 0 0112 7.415a9.57 9.57 0 012.5.335c1.905-1.295 2.745-1.025 2.745-1.025.54 1.375.2 2.39.1 2.645.64.7 1.025 1.59 1.025 2.68 0 3.825-2.335 4.675-4.565 4.92.36.31.68.92.68 1.855 0 1.34-.01 2.42-.01 2.75 0 .27.18.575.688.475C19.14 20.16 22 16.415 22 12c0-5.525-4.475-10-10-10z"/></svg>
+        </a>
+        <a href="https://linkedin.com/in/kommilekhasree" target="_blank" rel="noopener" class="w-11 h-11 rounded-full bg-white border border-gray-200 shadow-sm flex items-center justify-center hover:scale-110 hover:shadow-md transition-all shrink-0" title="LinkedIn">
+          <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24" class="shrink-0"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- Stat cards row -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-20 reveal">
+      <div class="stat-card">
+        <div class="text-3xl font-black text-gray-900 counter" data-target="3">0</div>
+        <div class="text-[12px] text-gray-500 font-semibold mt-1 uppercase tracking-wider">Internships</div>
+      </div>
+      <div class="stat-card">
+        <div class="text-3xl font-black text-gray-900 counter" data-target="5">0</div>
+        <div class="text-[12px] text-gray-500 font-semibold mt-1 uppercase tracking-wider">Projects Shipped</div>
+      </div>
+      <div class="stat-card">
+        <div class="text-3xl font-black text-gray-900 counter" data-target="16">0</div>
+        <div class="text-[12px] text-gray-500 font-semibold mt-1 uppercase tracking-wider">Technologies</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════
+     MARQUEE STRIP
+════════════════════════════════════════════ -->
+<div class="py-5 bg-[#111] overflow-hidden">
+  <div class="marquee-wrap">
+    <div class="flex items-center whitespace-nowrap animate-marquee">
+      <span class="text-[12px] font-bold tracking-[0.2em] uppercase text-white/60 mx-10">✦ Data Analysis</span>
+      <span class="text-[#FF5C00] mx-4 text-xl">◆</span>
+      <span class="text-[12px] font-bold tracking-[0.2em] uppercase text-white/60 mx-10">Web Development</span>
+      <span class="text-[#FF5C00] mx-4 text-xl">◆</span>
+      <span class="text-[12px] font-bold tracking-[0.2em] uppercase text-white/60 mx-10">Python & SQL</span>
+      <span class="text-[#FF5C00] mx-4 text-xl">◆</span>
+      <span class="text-[12px] font-bold tracking-[0.2em] uppercase text-white/60 mx-10">Spring Boot APIs</span>
+      <span class="text-[#FF5C00] mx-4 text-xl">◆</span>
+      <span class="text-[12px] font-bold tracking-[0.2em] uppercase text-white/60 mx-10">Tableau Dashboards</span>
+      <span class="text-[#FF5C00] mx-4 text-xl">◆</span>
+      <span class="text-[12px] font-bold tracking-[0.2em] uppercase text-white/60 mx-10">React &amp; Tailwind</span>
+      <span class="text-[#FF5C00] mx-4 text-xl">◆</span>
+      <!-- duplicate for seamless loop -->
+      <span class="text-[12px] font-bold tracking-[0.2em] uppercase text-white/60 mx-10">✦ Data Analysis</span>
+      <span class="text-[#FF5C00] mx-4 text-xl">◆</span>
+      <span class="text-[12px] font-bold tracking-[0.2em] uppercase text-white/60 mx-10">Web Development</span>
+      <span class="text-[#FF5C00] mx-4 text-xl">◆</span>
+      <span class="text-[12px] font-bold tracking-[0.2em] uppercase text-white/60 mx-10">Python & SQL</span>
+      <span class="text-[#FF5C00] mx-4 text-xl">◆</span>
+      <span class="text-[12px] font-bold tracking-[0.2em] uppercase text-white/60 mx-10">Spring Boot APIs</span>
+      <span class="text-[#FF5C00] mx-4 text-xl">◆</span>
+      <span class="text-[12px] font-bold tracking-[0.2em] uppercase text-white/60 mx-10">Tableau Dashboards</span>
+      <span class="text-[#FF5C00] mx-4 text-xl">◆</span>
+      <span class="text-[12px] font-bold tracking-[0.2em] uppercase text-white/60 mx-10">React &amp; Tailwind</span>
+      <span class="text-[#FF5C00] mx-4 text-xl">◆</span>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     ABOUT
+════════════════════════════════════════════ -->
+<section id="about" class="py-28 px-6 md:px-12 lg:px-20 max-w-7xl mx-auto">
+  <div class="reveal">
+    <span class="tag bg-[#FFF2EB] text-[#FF5C00] mb-5">About me</span>
+    <h2 class="text-[clamp(36px,5vw,60px)] font-black tracking-tight text-gray-900 leading-[1.1] mb-16 max-w-3xl">
+      Passionate about turning raw data into meaningful stories.
+    </h2>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+    <!-- Left: Timeline -->
+    <div class="glass p-8 reveal">
+      <h3 class="text-[11px] font-black uppercase tracking-[0.18em] text-gray-400 mb-8">Experience Journey</h3>
+      <div class="relative">
+        <div class="tl-line"></div>
+        <div class="flex flex-col gap-7">
+
+          <div class="tl-item flex items-start gap-5 group cursor-default">
+            <div class="tl-dot bg-gradient-to-br from-[#FF5C00] to-[#FF2D55] mt-0.5"></div>
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="tag bg-[#FFF2EB] text-[#FF5C00]">2024 • Intern</span>
+              </div>
+              <h4 class="font-bold text-[17px] text-gray-900">Web Development Intern</h4>
+              <p class="text-[13px] text-gray-500 font-semibold mt-0.5">Martex AI</p>
+              <p class="text-[13px] text-gray-400 mt-2 leading-relaxed">Frontend architecture, responsive design, and delivering real-world web solutions.</p>
+            </div>
+          </div>
+
+          <div class="tl-item flex items-start gap-5 group cursor-default">
+            <div class="tl-dot bg-gray-400 mt-0.5"></div>
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="tag bg-gray-100 text-gray-600">2023 • Intern</span>
+              </div>
+              <h4 class="font-bold text-[17px] text-gray-900">Python Developer Intern</h4>
+              <p class="text-[13px] text-gray-500 font-semibold mt-0.5">ShadowFox</p>
+              <p class="text-[13px] text-gray-400 mt-2 leading-relaxed">Backend scripting, automation, and data processing pipelines with Python.</p>
+            </div>
+          </div>
+
+          <div class="tl-item flex items-start gap-5 group cursor-default">
+            <div class="tl-dot bg-gray-300 mt-0.5"></div>
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="tag bg-gray-100 text-gray-500">2022 • Intern</span>
+              </div>
+              <h4 class="font-bold text-[17px] text-gray-900">Data Analyst Intern</h4>
+              <p class="text-[13px] text-gray-500 font-semibold mt-0.5">Techknots</p>
+              <p class="text-[13px] text-gray-400 mt-2 leading-relaxed">SQL querying, dashboard creation, and data-driven reporting using Tableau.</p>
+            </div>
+          </div>
+
+          <div class="tl-item flex items-start gap-5 pt-4 border-t border-dashed border-gray-200 cursor-default">
+            <div class="w-[18px] h-[18px] rounded border-2 border-gray-300 bg-white flex-shrink-0 mt-0.5"></div>
+            <div>
+              <span class="tag bg-indigo-50 text-[#5B5FED] mb-1">2023 – 2027 • Education</span>
+              <h4 class="font-bold text-[17px] text-gray-900">B.E. Computer Science (Data Science)</h4>
+              <p class="text-[13px] text-gray-500 font-semibold mt-0.5">Sathyabama University, Chennai</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Profile + Quick Facts -->
+    <div class="flex flex-col gap-6 reveal">
+      <div class="glass p-8">
+        <h3 class="text-[11px] font-black uppercase tracking-[0.18em] text-gray-400 mb-5">Profile</h3>
+        <p class="text-[15px] text-gray-600 leading-[1.75] font-medium">
+          I'm a motivated Computer Science graduate passionate about <strong class="text-gray-900">AI, data-driven decision-making</strong>, and solving real-world problems with technology. My experience spans <strong class="text-gray-900">data analysis, Tableau dashboards</strong>, and <strong class="text-gray-900">full-stack web development</strong> with Java, Python, Spring Boot, and React.
+        </p>
+        <div class="mt-6 flex flex-wrap gap-2">
+          <span class="tag bg-gray-100 text-gray-700">📍 Chennai, India</span>
+          <span class="tag bg-gray-100 text-gray-700">🎓 Exp. 2027</span>
+          <span class="tag bg-[#FFF2EB] text-[#FF5C00]">✨ Open to Work</span>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div class="glass p-6 text-center hover:!scale-105">
+          <div class="text-4xl mb-2">🐍</div>
+          <div class="font-bold text-gray-900 text-[13px]">Python Enthusiast</div>
+        </div>
+        <div class="glass p-6 text-center hover:!scale-105">
+          <div class="text-4xl mb-2">📊</div>
+          <div class="font-bold text-gray-900 text-[13px]">Tableau Expert</div>
+        </div>
+        <div class="glass p-6 text-center hover:!scale-105">
+          <div class="text-4xl mb-2">🌐</div>
+          <div class="font-bold text-gray-900 text-[13px]">Web Developer</div>
+        </div>
+        <div class="glass p-6 text-center hover:!scale-105">
+          <div class="text-4xl mb-2">🤖</div>
+          <div class="font-bold text-gray-900 text-[13px]">AI Curious</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════
+     PROJECTS
+════════════════════════════════════════════ -->
+<section id="projects" class="py-24 px-6 md:px-12 lg:px-20 max-w-7xl mx-auto">
+  <div class="reveal mb-16">
+    <span class="tag bg-black text-white mb-5">Work</span>
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+      <h2 class="text-[clamp(32px,5vw,58px)] font-black tracking-tight text-gray-900 leading-[1.1] max-w-xl">
+        Projects that <span class="text-grad">ship</span> and <span class="text-grad-cool">scale.</span>
+      </h2>
+      <a href="https://github.com/Lekha0403" target="_blank" class="btn-outline self-start md:self-auto shrink-0">
+        View all on GitHub ↗
+      </a>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 reveal">
+
+    <!-- Project 1: Movie Dashboard -->
+    <div class="proj-card glass p-0 overflow-hidden cursor-pointer group" onclick="openProjectModal('movie')" tabindex="0" role="button" aria-label="View Movie Dashboard project">
+      <div class="relative overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 h-[260px] flex items-end">
+        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800"
+             alt="Movie Data Dashboard Placeholder"
+             class="w-[88%] mx-auto rounded-t-2xl shadow-2xl border border-gray-200 group-hover:-translate-y-2 transition-transform duration-700 mt-auto object-cover h-[200px] object-top" />
+        <div class="proj-overlay absolute inset-0 bg-black/40 flex items-center justify-center rounded-t-[28px]">
+          <span class="px-5 py-2.5 bg-white text-black text-sm font-bold rounded-full shadow-lg flex items-center gap-2">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="shrink-0"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            View Details
+          </span>
+        </div>
+      </div>
+      <div class="p-7">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="tag bg-indigo-50 text-[#5B5FED]">Tableau</span>
+          <span class="tag bg-gray-100 text-gray-600">SQL</span>
+          <span class="tag bg-gray-100 text-gray-600">Python</span>
+        </div>
+        <h3 class="font-black text-[22px] text-gray-900 leading-tight mb-2">Movie Data Analysis Dashboard</h3>
+        <p class="text-[14px] text-gray-500 font-medium leading-relaxed">
+          Interactive Tableau dashboard analysing 1,000+ movie records — genres, runtime, ratings, and box-office revenue with advanced filtering.
+        </p>
+        <div class="mt-5 flex items-center gap-1.5 text-[13px] font-bold text-current group-hover:gap-2.5 transition-all">
+          <span>Open case study</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 relative top-[0.5px]"><path d="M5 12h14m-7-7l7 7-7 7"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Project 2: Food App -->
+    <div class="proj-card glass p-0 overflow-hidden cursor-pointer group" onclick="openProjectModal('food')" tabindex="0" role="button" aria-label="View Food App project">
+      <div class="relative overflow-hidden bg-gradient-to-br from-orange-50 to-rose-50 h-[260px] flex items-end">
+        <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&q=80&w=800"
+             alt="Food Ordering App Placeholder"
+             class="w-[88%] mx-auto rounded-t-2xl shadow-2xl border border-orange-100 group-hover:-translate-y-2 transition-transform duration-700 mt-auto object-cover h-[200px]" />
+        <div class="proj-overlay absolute inset-0 bg-black/40 flex items-center justify-center rounded-t-[28px]">
+          <span class="px-5 py-2.5 bg-white text-black text-sm font-bold rounded-full shadow-lg flex items-center gap-2">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="shrink-0"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            View Details
+          </span>
+        </div>
+      </div>
+      <div class="p-7">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="tag bg-[#FFF2EB] text-[#FF5C00]">React.js</span>
+          <span class="tag bg-gray-100 text-gray-600">Spring Boot</span>
+          <span class="tag bg-gray-100 text-gray-600">MySQL</span>
+        </div>
+        <h3 class="font-black text-[22px] text-gray-900 leading-tight mb-2">Food Ordering Application</h3>
+        <p class="text-[14px] text-gray-500 font-medium leading-relaxed">
+          Full-stack web application featuring real-time order management, user authentication, restaurant listings, and REST API backend.
+        </p>
+        <div class="mt-5 flex items-center gap-1.5 text-[13px] font-bold text-[#FF5C00] group-hover:gap-2.5 transition-all">
+          <span>Open case study</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 relative top-[0.5px]"><path d="M5 12h14m-7-7l7 7-7 7"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Project 3: E-commerce -->
+    <div class="proj-card glass p-7 cursor-pointer group col-span-1 md:col-span-2" onclick="openProjectModal('ecom')">
+      <div class="flex flex-col md:flex-row md:items-center gap-8">
+        <div class="md:w-1/2">
+          <div class="flex items-center gap-2 mb-3">
+            <span class="tag bg-[#F0FDF4] text-green-700">Java</span>
+            <span class="tag bg-gray-100 text-gray-600">Spring Boot</span>
+            <span class="tag bg-gray-100 text-gray-600">MySQL</span>
+            <span class="tag bg-gray-100 text-gray-600">REST APIs</span>
+          </div>
+          <h3 class="font-black text-[26px] text-gray-900 leading-tight mb-3">E-Commerce Platform Backend</h3>
+          <p class="text-[14px] text-gray-500 font-medium leading-relaxed mb-6">
+            Scalable Spring Boot backend powering an e-commerce platform — product catalogue, order processing, cart management, and secure authentication via JWT.
+          </p>
+          <button onclick="openProjectModal('ecom')" class="btn-primary text-sm py-3 px-6 group">
+            <span>Explore Project</span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 group-hover:translate-x-1 transition-transform"><path d="M5 12h14m-7-7l7 7-7 7"/></svg>
+          </button>
+        </div>
+        <div class="md:w-1/2 bg-gray-900 rounded-2xl p-5 font-mono text-[12px] text-green-400 overflow-hidden group-hover:shadow-2xl transition-shadow">
+          <div class="text-gray-500 mb-3 text-[10px] uppercase tracking-wider">// Spring Boot Controller</div>
+          <div><span class="text-purple-400">@RestController</span></div>
+          <div><span class="text-blue-400">public class</span> <span class="text-yellow-300">ProductController</span> &#123;</div>
+          <div class="pl-4">
+            <div><span class="text-purple-400">@GetMapping</span>(<span class="text-green-300">"/api/products"</span>)</div>
+            <div><span class="text-blue-400">public</span> List&lt;<span class="text-yellow-300">Product</span>&gt; <span class="text-green-400">getAll</span>() &#123;</div>
+            <div class="pl-4"><span class="text-blue-400">return</span> productService.<span class="text-green-400">findAll</span>();</div>
+            <div>&#125;</div>
+          </div>
+          <div>&#125;</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════
+     SKILLS
+════════════════════════════════════════════ -->
+<section id="skills" class="py-24 px-6 md:px-12 lg:px-20 max-w-7xl mx-auto">
+  <div class="reveal mb-16">
+    <span class="tag bg-[#EEF2FF] text-[#5B5FED] mb-5">Skills</span>
+    <h2 class="text-[clamp(32px,5vw,58px)] font-black tracking-tight text-gray-900 leading-[1.1] max-w-xl">
+      Tools & technologies I <span class="text-grad-cool">master.</span>
+    </h2>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8 reveal">
+    <!-- Skill bars left -->
+    <div class="glass p-8 space-y-7">
+      <h3 class="text-[11px] font-black uppercase tracking-[0.18em] text-gray-400 mb-2">Core Proficiency</h3>
+
+      <div>
+        <div class="flex justify-between mb-2"><span class="text-[14px] font-bold text-gray-800">Python & Data Analysis</span><span class="text-[13px] font-bold text-gray-500">88%</span></div>
+        <div class="h-2.5 bg-gray-100 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-[#FF5C00] to-[#FF2D55] rounded-full skill-bar" style="width:0%" data-width="88%"></div></div>
+      </div>
+      <div>
+        <div class="flex justify-between mb-2"><span class="text-[14px] font-bold text-gray-800">SQL & MySQL</span><span class="text-[13px] font-bold text-gray-500">85%</span></div>
+        <div class="h-2.5 bg-gray-100 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-[#5B5FED] to-[#9B5DE5] rounded-full skill-bar" style="width:0%" data-width="85%"></div></div>
+      </div>
+      <div>
+        <div class="flex justify-between mb-2"><span class="text-[14px] font-bold text-gray-800">Java & Spring Boot</span><span class="text-[13px] font-bold text-gray-500">78%</span></div>
+        <div class="h-2.5 bg-gray-100 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-[#0EA5E9] to-[#6366F1] rounded-full skill-bar" style="width:0%" data-width="78%"></div></div>
+      </div>
+      <div>
+        <div class="flex justify-between mb-2"><span class="text-[14px] font-bold text-gray-800">React.js & Tailwind CSS</span><span class="text-[13px] font-bold text-gray-500">80%</span></div>
+        <div class="h-2.5 bg-gray-100 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-[#06B6D4] to-[#0EA5E9] rounded-full skill-bar" style="width:0%" data-width="80%"></div></div>
+      </div>
+      <div>
+        <div class="flex justify-between mb-2"><span class="text-[14px] font-bold text-gray-800">Tableau</span><span class="text-[13px] font-bold text-gray-500">83%</span></div>
+        <div class="h-2.5 bg-gray-100 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-[#F59E0B] to-[#EF4444] rounded-full skill-bar" style="width:0%" data-width="83%"></div></div>
+      </div>
+    </div>
+
+    <!-- Skill chips right -->
+    <div class="flex flex-col gap-6">
+      <div class="glass p-8">
+        <h3 class="text-[11px] font-black uppercase tracking-[0.18em] text-gray-400 mb-5">All Technologies</h3>
+        <div class="flex flex-wrap gap-2">
+          <span class="skill-chip">Java</span>
+          <span class="skill-chip">Python</span>
+          <span class="skill-chip">HTML/CSS</span>
+          <span class="skill-chip">JavaScript</span>
+          <span class="skill-chip">React.js</span>
+          <span class="skill-chip">Spring Boot</span>
+          <span class="skill-chip">Node.js</span>
+          <span class="skill-chip">Django</span>
+          <span class="skill-chip">REST APIs</span>
+          <span class="skill-chip">MySQL</span>
+          <span class="skill-chip">MongoDB</span>
+          <span class="skill-chip">Tableau</span>
+          <span class="skill-chip">Kaggle</span>
+          <span class="skill-chip">GitHub</span>
+          <span class="skill-chip">Postman</span>
+          <span class="skill-chip">DBMS</span>
+        </div>
+      </div>
+
+      <div class="glass p-8">
+        <h3 class="text-[11px] font-black uppercase tracking-[0.18em] text-gray-400 mb-5">How I Work</h3>
+        <div class="space-y-4">
+          <div class="process-step" data-step="1" onclick="highlightStep(this)">
+            <div class="flex items-start gap-4 p-4 rounded-2xl cursor-pointer hover:bg-gray-50 transition-colors">
+              <div class="w-8 h-8 rounded-xl bg-[#FFF2EB] flex items-center justify-center text-[#FF5C00] font-black text-sm shrink-0">01</div>
+              <div><div class="font-bold text-gray-900 text-[14px]">Research & Understand</div><div class="text-[13px] text-gray-500 mt-0.5">Deep dive into data and requirements.</div></div>
+            </div>
+          </div>
+          <div class="process-step" data-step="2" onclick="highlightStep(this)">
+            <div class="flex items-start gap-4 p-4 rounded-2xl cursor-pointer hover:bg-gray-50 transition-colors">
+              <div class="w-8 h-8 rounded-xl bg-[#EEF2FF] flex items-center justify-center text-[#5B5FED] font-black text-sm shrink-0">02</div>
+              <div><div class="font-bold text-gray-900 text-[14px]">Model & Design</div><div class="text-[13px] text-gray-500 mt-0.5">Architecture, schema, and UI prototyping.</div></div>
+            </div>
+          </div>
+          <div class="process-step" data-step="3" onclick="highlightStep(this)">
+            <div class="flex items-start gap-4 p-4 rounded-2xl cursor-pointer hover:bg-gray-50 transition-colors">
+              <div class="w-8 h-8 rounded-xl bg-[#F0FDF4] flex items-center justify-center text-green-700 font-black text-sm shrink-0">03</div>
+              <div><div class="font-bold text-gray-900 text-[14px]">Build & Engineer</div><div class="text-[13px] text-gray-500 mt-0.5">Clean, tested, production-ready code.</div></div>
+            </div>
+          </div>
+          <div class="process-step" data-step="4" onclick="highlightStep(this)">
+            <div class="flex items-start gap-4 p-4 rounded-2xl cursor-pointer hover:bg-gray-50 transition-colors">
+              <div class="w-8 h-8 rounded-xl bg-gray-100 flex items-center justify-center text-gray-700 font-black text-sm shrink-0">04</div>
+              <div><div class="font-bold text-gray-900 text-[14px]">Launch & Optimise</div><div class="text-[13px] text-gray-500 mt-0.5">Monitor, iterate, and continuously improve.</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════
+     CONTACT
+════════════════════════════════════════════ -->
+<section id="contact" class="py-24 px-6 md:px-12 lg:px-20 max-w-7xl mx-auto">
+  <div class="reveal">
+    <span class="tag bg-gray-900 text-white mb-5">Let's Connect</span>
+    <h2 class="text-[clamp(32px,5vw,58px)] font-black tracking-tight text-gray-900 leading-[1.1] mb-4 max-w-xl">
+      Have a project in mind? <span class="text-grad">Let's talk.</span>
+    </h2>
+    <p class="text-[16px] text-gray-500 font-medium mb-14 max-w-lg">I'm actively looking for internship/work opportunities. Reach out and let's build something great together.</p>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 reveal">
+    <!-- Resume Download Section -->
+    <div class="lg:col-span-3 glass p-10 flex flex-col items-center justify-center text-center group">
+      <div class="w-20 h-20 rounded-3xl bg-gradient-to-br from-[#FF5C00] to-[#FF2D55] flex items-center justify-center text-white text-3xl shadow-[0_20px_48px_rgba(255,92,0,0.3)] mb-8 group-hover:scale-110 transition-transform duration-500">
+        <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 15V3m0 12l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <h3 class="text-3xl font-black text-gray-900 mb-4">Want the full story?</h3>
+      <p class="text-gray-500 font-medium max-w-sm mb-10 leading-relaxed">
+        Download my comprehensive resume to see my full technical background, academic achievements, and project deep-dives.
+      </p>
+      
+      <a href="Kommi_Lekha_Sree_Resume.pdf" download class="btn-primary text-lg py-5 px-10 shadow-[0_20px_40px_rgba(0,0,0,0.1)] group/res">
+        <span>Download Full Resume</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 group-hover/res:translate-y-1 transition-transform"><path d="M12 15V3m0 12l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg>
+      </a>
+      
+      <p class="mt-8 text-[12px] text-gray-400 font-bold uppercase tracking-widest">Available in PDF Format</p>
+    </div>
+
+    <!-- Contact links -->
+    <div class="lg:col-span-2 flex flex-col gap-4">
+      <a href="mailto:kommilekhasreetpt@gmail.com" class="glass p-6 flex items-center gap-5 group hover:!-translate-y-2">
+        <div class="w-12 h-12 rounded-2xl bg-[#FFF2EB] flex items-center justify-center text-[#FF5C00] shrink-0 group-hover:scale-110 transition-transform">
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div>
+          <div class="font-black text-gray-900 text-[15px]">Email Me</div>
+          <div class="text-[13px] text-gray-500 mt-0.5">kommilekhasreetpt@gmail.com</div>
+        </div>
+        <div class="ml-auto text-gray-300 group-hover:text-gray-900 group-hover:translate-x-1 transition-all">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><path d="M5 12h14m-7-7l7 7-7 7"/></svg>
+        </div>
+      </a>
+
+      <a href="https://linkedin.com/in/kommilekhasree" target="_blank" class="glass p-6 flex items-center gap-5 group hover:!-translate-y-2">
+        <div class="w-12 h-12 rounded-2xl bg-[#EEF2FF] flex items-center justify-center text-[#5B5FED] shrink-0 group-hover:scale-110 transition-transform">
+          <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+        </div>
+        <div>
+          <div class="font-black text-gray-900 text-[15px]">LinkedIn</div>
+          <div class="text-[13px] text-gray-500 mt-0.5">linkedin.com/in/kommilekhasree</div>
+        </div>
+        <div class="ml-auto text-gray-300 group-hover:text-gray-900 group-hover:translate-x-1 transition-all">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><path d="M5 12h14m-7-7l7 7-7 7"/></svg>
+        </div>
+      </a>
+
+      <a href="https://github.com/Lekha0403" target="_blank" class="glass p-6 flex items-center gap-5 group hover:!-translate-y-2">
+        <div class="w-12 h-12 rounded-2xl bg-gray-100 flex items-center justify-center text-gray-700 shrink-0 group-hover:scale-110 transition-transform">
+          <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.041-1.416-4.041-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+        </div>
+        <div>
+          <div class="font-black text-gray-900 text-[15px]">GitHub</div>
+          <div class="text-[13px] text-gray-500 mt-0.5">github.com/Lekha0403</div>
+        </div>
+        <div class="ml-auto text-gray-300 group-hover:text-gray-900 group-hover:translate-x-1 transition-all">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><path d="M5 12h14m-7-7l7 7-7 7"/></svg>
+        </div>
+      </a>
+
+      <button onclick="copyPhone()" class="glass p-6 flex items-center gap-5 group hover:!-translate-y-2 text-left w-full">
+        <div class="w-12 h-12 rounded-2xl bg-[#F0FDF4] flex items-center justify-center text-green-700 shrink-0 group-hover:scale-110 transition-transform">
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 1.72 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div>
+          <div class="font-black text-gray-900 text-[15px]">Phone</div>
+          <div class="text-[13px] text-gray-500 mt-0.5">+91 93901 35232</div>
+        </div>
+        <div class="ml-auto text-[11px] text-gray-400 font-bold">COPY</div>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════ -->
+<footer class="bg-[#0F0F14] text-white py-14 px-6 md:px-12 lg:px-20 mt-16">
+  <div class="max-w-7xl mx-auto">
+    <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-10 pb-10 border-b border-white/10">
+      <div>
+        <div class="text-[32px] font-black mb-2">Kommi<span class="text-[#FF5C00]">.</span></div>
+        <p class="text-[14px] text-white/50 max-w-xs font-medium leading-relaxed">Data Analyst & Web Developer turning ideas into impactful digital experiences.</p>
+      </div>
+      <div class="flex flex-col gap-3">
+        <div class="text-[11px] font-black uppercase tracking-wider text-white/30 mb-1">Quick Links</div>
+        <div class="flex flex-wrap gap-2">
+          <a href="#home"     class="text-[13px] font-semibold text-white/60 hover:text-white transition">Home</a>
+          <span class="text-white/20">·</span>
+          <a href="#about"    class="text-[13px] font-semibold text-white/60 hover:text-white transition">About</a>
+          <span class="text-white/20">·</span>
+          <a href="#projects" class="text-[13px] font-semibold text-white/60 hover:text-white transition">Projects</a>
+          <span class="text-white/20">·</span>
+          <a href="#skills"   class="text-[13px] font-semibold text-white/60 hover:text-white transition">Skills</a>
+          <span class="text-white/20">·</span>
+          <a href="#contact"  class="text-[13px] font-semibold text-white/60 hover:text-white transition">Contact</a>
+        </div>
+      </div>
+    </div>
+    <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p class="text-[13px] text-white/40 font-medium">© 2026 Kommi Lekha Sree. All rights reserved.</p>
+      <div class="flex items-center gap-3">
+        <a href="https://github.com/Lekha0403"         target="_blank" class="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-white/50 hover:text-white hover:border-white/40 transition text-sm">GH</a>
+        <a href="https://linkedin.com/in/kommilekhasree" target="_blank" class="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-white/50 hover:text-white hover:border-white/40 transition text-sm">LI</a>
+        <a href="mailto:kommilekhasreetpt@gmail.com"    class="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-white/50 hover:text-white hover:border-white/40 transition text-sm">@</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ════════════════════════════════════════════
+     PROJECT MODAL
+════════════════════════════════════════════ -->
+<div id="project-modal" class="fixed inset-0 z-[200] flex items-center justify-center p-4 opacity-0 invisible transition-all duration-300" onclick="closeModal(event)">
+  <div class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+  <div id="modal-content" class="relative bg-white rounded-[32px] max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl transform scale-95 transition-all duration-300 p-8">
+    <button onclick="closeModalDirect()" class="absolute top-5 right-5 w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-600 font-bold transition">✕</button>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     TOAST
+════════════════════════════════════════════ -->
+<div id="toast">✓ Copied to clipboard</div>
+
+<!-- ════════════════════════════════════════════
+     SKILL CHIPS (shared style via JS)
+════════════════════════════════════════════ -->
+<style>
+.skill-chip {
+  display: inline-flex; align-items: center;
+  padding: 6px 14px; border-radius: 100px;
+  background: #F3F4F6; color: #374151;
+  font-size: 12px; font-weight: 700;
+  letter-spacing: 0.03em;
+  border: 1px solid rgba(0,0,0,0.05);
+  transition: all 0.25s;
+  cursor: default;
+}
+.skill-chip:hover { background: #111; color: #fff; transform: translateY(-2px); }
+</style>
+
+<!-- ════════════════════════════════════════════
+     JAVASCRIPT
+════════════════════════════════════════════ -->
+<script>
+/* ── Custom cursor ── */
+const cursor = document.getElementById('cursor');
+const cursorRing = document.getElementById('cursor-ring');
+let mx = 0, my = 0, rx = 0, ry = 0;
+
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cursor.style.transform = `translate(${mx - 6}px, ${my - 6}px)`;
+});
+
+function animateRing() {
+  rx += (mx - rx - 20) * 0.12;
+  ry += (my - ry - 20) * 0.12;
+  cursorRing.style.transform = `translate(${rx}px, ${ry}px)`;
+  requestAnimationFrame(animateRing);
+}
+animateRing();
+
+document.querySelectorAll('a, button, [role="button"]').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cursor.style.transform += ' scale(2)';
+    cursor.style.background = '#FF5C00';
+    cursorRing.style.opacity = '0.4';
+  });
+  el.addEventListener('mouseleave', () => {
+    cursor.style.background = '#111';
+    cursorRing.style.opacity = '1';
+  });
+});
+
+/* ── Navbar scroll effect ── */
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 30);
+  // Highlight active nav link
+  const sections = ['home','about','projects','skills','contact'];
+  const scrollY = window.scrollY + 120;
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    const link = document.querySelector(`a[href="#${id}"]`);
+    if (!el || !link) return;
+    const inView = el.offsetTop <= scrollY && (el.offsetTop + el.offsetHeight) > scrollY;
+    link.classList.toggle('text-gray-900', inView);
+    link.classList.toggle('bg-white/80', inView);
+    link.classList.toggle('font-bold', inView);
+  });
+});
+
+/* ── Mobile menu ── */
+function toggleMenu() {
+  const menu = document.getElementById('mobile-menu');
+  menu.classList.toggle('open');
+  document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
+}
+
+/* ── Scroll reveal ── */
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      revealObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+/* ── Skill bars ── */
+const skillObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('.skill-bar').forEach(bar => {
+        bar.style.width = bar.dataset.width;
+      });
+    }
+  });
+}, { threshold: 0.3 });
+document.querySelectorAll('.glass').forEach(el => skillObserver.observe(el));
+
+/* ── Counters ── */
+const counterObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    const el = entry.target;
+    const target = parseInt(el.dataset.target);
+    const suffix = target >= 1000 ? '+' : '';
+    let current = 0;
+    const duration = 1200;
+    const step = target / (duration / 16);
+    const timer = setInterval(() => {
+      current = Math.min(current + step, target);
+      el.textContent = Math.floor(current) + suffix;
+      if (current >= target) clearInterval(timer);
+    }, 16);
+    counterObserver.unobserve(el);
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('.counter').forEach(el => counterObserver.observe(el));
+
+/* ── Process step highlight ── */
+function highlightStep(el) {
+  document.querySelectorAll('.process-step > div').forEach(s => {
+    s.classList.remove('bg-gray-50', 'shadow-sm', 'ring-1', 'ring-gray-200');
+  });
+  el.querySelector('div').classList.add('bg-gray-50', 'shadow-sm', 'ring-1', 'ring-gray-200');
+}
+
+/* ── Project modal data ── */
+const projects = {
+  movie: {
+    title: 'Movie Data Analysis Dashboard',
+    tag: 'Data Analytics • Tableau',
+    tagColor: 'bg-indigo-50 text-indigo-600',
+    description: 'Developed an interactive Tableau dashboard to analyse 1,000+ movie records including genres, runtime, ratings, and box-office revenue. Features advanced filters, cross-chart interactions, and a clean executive summary view.',
+    tech: ['Tableau', 'SQL', 'Python', 'Kaggle'],
+    img: 'file:///C:/Users/Santhosh/.gemini/antigravity/brain/2999b4b2-6295-4e06-be43-a29948d143f4/movie_dashboard_1776659202553.png',
+    link: 'https://github.com/Lekha0403',
+  },
+  food: {
+    title: 'Food Ordering Application',
+    tag: 'Full-Stack • React + Spring Boot',
+    tagColor: 'bg-orange-50 text-orange-600',
+    description: 'Full-stack web application featuring real-time order management, user authentication via JWT, restaurant listings management, a cart system, and a RESTful API backend. Built with a React.js frontend and Spring Boot backend connected to MySQL.',
+    tech: ['React.js', 'Spring Boot', 'MySQL', 'REST APIs', 'JWT'],
+    img: 'file:///C:/Users/Santhosh/.gemini/antigravity/brain/2999b4b2-6295-4e06-be43-a29948d143f4/food_app_1776659218775.png',
+    link: 'https://github.com/Lekha0403',
+  },
+  ecom: {
+    title: 'E-Commerce Platform Backend',
+    tag: 'Backend • Java Spring Boot',
+    tagColor: 'bg-green-50 text-green-700',
+    description: 'Scalable e-commerce backend powering product catalogues, order processing workflows, shopping cart management, and secure user authentication. Designed with clean REST API conventions, Postman-tested, and optimised for performance.',
+    tech: ['Java', 'Spring Boot', 'MySQL', 'REST APIs', 'Postman'],
+    img: null,
+    link: 'https://github.com/Lekha0403',
+  },
+};
+
+function openProjectModal(key) {
+  const p = projects[key];
+  const modal = document.getElementById('project-modal');
+  const content = document.getElementById('modal-content');
+  document.getElementById('modal-body').innerHTML = `
+    ${p.img ? `<img src="${p.img}" alt="${p.title}" class="w-full rounded-2xl object-cover mb-6 shadow-md" style="max-height:240px;object-fit:cover;" />` : ''}
+    <span class="tag ${p.tagColor} mb-4">${p.tag}</span>
+    <h3 class="text-[26px] font-black text-gray-900 leading-tight mt-2 mb-3">${p.title}</h3>
+    <p class="text-[15px] text-gray-600 leading-relaxed font-medium mb-6">${p.description}</p>
+    <div class="mb-8">
+      <div class="text-[11px] font-black uppercase tracking-[0.18em] text-gray-400 mb-3">Tech Stack</div>
+      <div class="flex flex-wrap gap-2">${p.tech.map(t => `<span class="skill-chip">${t}</span>`).join('')}</div>
+    </div>
+    <a href="${p.link}" target="_blank" rel="noopener" class="btn-primary w-full justify-center py-4">
+      <span>View on GitHub ↗</span>
+    </a>
+  `;
+  modal.classList.remove('opacity-0','invisible');
+  setTimeout(() => { content.classList.remove('scale-95'); content.classList.add('scale-100'); }, 10);
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal(e) {
+  if (e.target === document.getElementById('project-modal') || e.target === e.currentTarget) closeModalDirect();
+}
+function closeModalDirect() {
+  const modal = document.getElementById('project-modal');
+  const content = document.getElementById('modal-content');
+  content.classList.remove('scale-100'); content.classList.add('scale-95');
+  setTimeout(() => { modal.classList.add('opacity-0','invisible'); document.body.style.overflow = ''; }, 250);
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModalDirect(); });
+
+/* ── Contact form ── */
+function submitForm(e) {
+  e.preventDefault();
+  const name    = document.getElementById('form-name').value;
+  const email   = document.getElementById('form-email').value;
+  const subject = document.getElementById('form-subject').value;
+  const message = document.getElementById('form-message').value;
+  const mailto  = `mailto:kommilekhasreetpt@gmail.com?subject=${encodeURIComponent(subject + ' — from ' + name)}&body=${encodeURIComponent('From: ' + name + '\nEmail: ' + email + '\n\n' + message)}`;
+  window.location.href = mailto;
+  showToast('✓ Opening your email client...');
+  e.target.reset();
+}
+
+/* ── Copy phone ── */
+function copyPhone() {
+  navigator.clipboard.writeText('+919390135232').then(() => showToast('📱 Phone number copied!'));
+}
+
+/* ── Toast ── */
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+/* ── Keyboard accessible modal ── */
+document.querySelectorAll('[role="button"]').forEach(el => {
+  el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') el.click(); });
+});
+</script>
+</body>
+</html>
